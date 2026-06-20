@@ -9,4 +9,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	global_position = global_position.lerp(target.global_position,follow_magnitude * delta)
+assssssssssssssd	global_position = global_position.lerp(target.global_position,follow_magnitude * delta)
