@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c055dhcymjmqp"
+path="res://.godot/imported/ripcord.mp3-b4024f5f58c6d72b70a9d4febc6412e6.mp3str"
+
+[deps]
+
+source_file="res://Miscellanious Assets Dump/Audio/ripcord.mp3"
+dest_files=["res://.godot/imported/ripcord.mp3-b4024f5f58c6d72b70a9d4febc6412e6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
