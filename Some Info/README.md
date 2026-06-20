@@ -15,3 +15,8 @@ We're making a Beyblade roguelike/metroidvania deckbuilder RPG (Or Beyblade buil
     * https://opengameart.org/content/extension-for-sci-fi-platformer-tiles-32x32
     * bart
     * CC0
+* beyblade placeholder png
+    * http://wiki.worldbeyblade.org/index.php?title=File:WyvernArmedMassive_Wyvern.png
+* ripcord sfx
+    * https://wavstock.com/sound/25072/
+    * Royalty-Free License
