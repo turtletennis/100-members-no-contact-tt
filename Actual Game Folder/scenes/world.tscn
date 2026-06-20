@@ -9,4 +9,6 @@ script = ExtResource("1_ne8rj")
 
 [node name="Menu" parent="." unique_id=1552408488 instance=ExtResource("2_qhasu")]
 
-[node name="Player" parent="." unique_id=1516017166 instance=ExtResource("3_qhasu")]
+[node name="Gameplay" type="Node2D" parent="." unique_id=1797617556]
+
+[node name="Player" parent="Gameplay" unique_id=1516017166 instance=ExtResource("3_qhasu")]
