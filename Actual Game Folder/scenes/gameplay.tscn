@@ -1,7 +1,18 @@
 [gd_scene format=3 uid="uid://cfdefk30w2x3n"]
 
 [ext_resource type="PackedScene" uid="uid://e1d03bbv2uh" path="res://Actual Game Folder/scenes/components/player.tscn" id="1_ix2qu"]
+[ext_resource type="PackedScene" uid="uid://c5srio2figxlm" path="res://Actual Game Folder/scenes/levels/level1.tscn" id="2_p5wng"]
+[ext_resource type="Script" uid="uid://pbx5c2p7gv2v" path="res://Actual Game Folder/scripts/follow_cam.gd" id="3_lksfj"]
 
 [node name="Gameplay" type="Node2D" unique_id=72458947]
 
 [node name="Player" parent="." unique_id=1516017166 instance=ExtResource("1_ix2qu")]
+
+[node name="Levels" type="Node" parent="." unique_id=1993832825]
+
+[node name="Level1" parent="Levels" unique_id=1666082091 instance=ExtResource("2_p5wng")]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1524686198 node_paths=PackedStringArray("target")]
+script = ExtResource("3_lksfj")
+target = NodePath("../Player")
+follow_magnitude = 4.0
