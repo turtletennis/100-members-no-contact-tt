@@ -20,6 +20,7 @@ const SPARKS_SCENE = preload("res://Actual Game Folder/scenes/components/sparks.
 
 @export_category("Resources")
 @export var launch_sfx_stream : AudioStream
+@export var collision_sfx_stream : AudioStream
 @onready var spin_bar: ProgressBar = $CanvasLayer/SpinBar
 
 
@@ -29,7 +30,7 @@ var player_died: bool = false
 
 func _ready() -> void:
 	AudioManager.play_sfx(launch_sfx_stream,global_position)
-	
+
 	# this is necessary for _on_body_entered, 1 is technically enough for just the player but with multiple bayblades we might need to increase this value.
 	max_contacts_reported = 5
 
@@ -65,8 +66,11 @@ func _physics_process(delta: float) -> void:
 
 # slightly lower spin velocity every time there is a collision with another rigid body
 # we can add ways to increase your spin later to give the player more control
-func _on_body_entered(_body: Node) -> void:
+func _on_body_entered(body: Node) -> void:
 	spin_velocity -= spin_velocity_drop_on_collision
+	if(body is Node2D):
+		var body2D = body as Node2D
+		AudioManager.play_sfx(collision_sfx_stream, body2D.global_position)
 	pass
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
