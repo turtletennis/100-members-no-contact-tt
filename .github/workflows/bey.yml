@@ -1,0 +1,57 @@
+name: does it still bey
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bey-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: "4.6"
+  GODOT_RELEASE: "stable"
+
+jobs:
+  bey:
+    name: health check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Static checks
+        id: static
+        continue-on-error: true
+        run: python3 ci/checks.py --fail-on=warning
+
+      - name: Install Godot ${{ env.GODOT_VERSION }}
+        continue-on-error: true
+        run: |
+          set -eux
+          base="Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64"
+          url="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-${GODOT_RELEASE}/${base}.zip"
+          curl -fsSL -o godot.zip "$url"
+          unzip -q godot.zip
+          mv "$base" godot-bin
+          chmod +x godot-bin
+          ./godot-bin --version
+
+      - name: Godot checks
+        id: godot
+        continue-on-error: true
+        env:
+          GODOT: ${{ github.workspace }}/godot-bin
+        run: bash ci/godot_checks.sh
+
+      - name: Gate
+        if: always()
+        env:
+          STATIC: ${{ steps.static.outcome }}
+          GODOT: ${{ steps.godot.outcome }}
+        run: |
+          echo "static=$STATIC godot=$GODOT"
+          [ "$STATIC" = "success" ] && [ "$GODOT" = "success" ]

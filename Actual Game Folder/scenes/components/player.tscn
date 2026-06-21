@@ -14,6 +14,7 @@ radius = 84.0
 mass = 0.5
 physics_material_override = SubResource("PhysicsMaterial_7buym")
 gravity_scale = 0.0
+contact_monitor = true
 script = ExtResource("1_7buym")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2048784928]
@@ -38,3 +39,5 @@ offset_right = 216.0
 offset_bottom = 36.0
 value = 100.0
 show_percentage = false
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cifjv677mnvrn" path="res://Actual Game Folder/scripts/button/let_it_rip.gd" id="1_jgfn2"]
 [ext_resource type="Texture2D" uid="uid://bwucxqtoakuy6" path="res://Miscellanious Assets Dump/Image/backgrounds/background_blue_distortion_640x320.png" id="1_pvo6j"]
+[ext_resource type="Script" uid="uid://dq6eoqewgcgj3" path="res://Actual Game Folder/scripts/button/exit.gd" id="3_nccfl"]
 
 [node name="Menu" type="Control" unique_id=1552408488]
 layout_mode = 3
@@ -41,3 +42,4 @@ script = ExtResource("1_jgfn2")
 [node name="EXIT" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1017300428]
 layout_mode = 2
 text = "EXIT"
+script = ExtResource("3_nccfl")
