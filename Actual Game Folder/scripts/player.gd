@@ -5,18 +5,21 @@ extends RigidBody2D
 
 # Can be part of a power up later
 # What's the mechanic like? I'm not sure about the core mechanic right now
-# Is player going to control the beyblade? Against who? It could be speedrun type game.
+# Is player going to control the B0yblade? Against who? It could be speedrun type game.
 
 # export these values to make it easier to adjust
 # we can tweek these until the game feels fun
 const SPARKS_SCENE = preload("res://Actual Game Folder/scenes/components/sparks.tscn")
 
 
+@export_category("Statistics")
 @export var starting_spin_velocity:float = 30
 @export var default_velocity: float = 20
 @export var spin_velocity_drop_on_collision: float = 1
 @export var spin_velocity_drop_over_time: float = 1
 
+@export_category("Resources")
+@export var launch_sfx_stream : AudioStream
 @onready var spin_bar: ProgressBar = $CanvasLayer/SpinBar
 
 
@@ -25,6 +28,8 @@ var spin_velocity: float = starting_spin_velocity
 var player_died: bool = false
 
 func _ready() -> void:
+	AudioManager.play_sfx(launch_sfx_stream,global_position)
+	
 	# this is necessary for _on_body_entered, 1 is technically enough for just the player but with multiple bayblades we might need to increase this value.
 	max_contacts_reported = 5
 
