@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://3n8wbd5ksjsw" path="res://Actual Game Folder/scripts/exploration/player_ex.gd" id="1_l66dl"]
 [ext_resource type="Texture2D" uid="uid://bssqvkylmoitv" path="res://Actual Game Folder/sprites/characters/Racoon_32x32.png" id="2_amyne"]
+[ext_resource type="PackedScene" uid="uid://crxweoeu82b5b" path="res://Actual Game Folder/scenes/components/exploration/dialog_box.tscn" id="3_5cf5f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4cep"]
 atlas = ExtResource("2_amyne")
@@ -403,11 +404,21 @@ frame_progress = 0.97247094
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_bir22")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=792334170]
-zoom = Vector2(2.5, 2.5)
-
 [node name="InteractionDetector" type="Area2D" parent="CharacterBody2D" unique_id=1448556074]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/InteractionDetector" unique_id=478907520]
 position = Vector2(-0.33333397, 1.000001)
 shape = SubResource("CircleShape2D_tnv23")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=792334170]
+zoom = Vector2(2.5, 2.5)
+
+[node name="DialogueBox" parent="CharacterBody2D/Camera2D" unique_id=941970375 instance=ExtResource("3_5cf5f")]
+visible = false
+position = Vector2(0, 56.33)
+scale = Vector2(0.6666667, 0.6666667)
+
+[node name="DialogueBox" parent="CharacterBody2D/Camera2D/DialogueBox" index="2" unique_id=1503575011]
+visible = true
+
+[editable path="CharacterBody2D/Camera2D/DialogueBox"]

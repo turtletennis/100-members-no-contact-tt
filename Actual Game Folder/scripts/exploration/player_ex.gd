@@ -12,6 +12,13 @@ var last_direction: Vector2 = Vector2.DOWN
 #interactions
 var near_enemy: Node2D = null
 @onready var detector: Area2D = $InteractionDetector
+#dialog
+@onready var dialogue_box: Node2D = $Camera2D/DialogueBox
+@onready var dialogue_text: RichTextLabel = $Camera2D/DialogueBox/DialogueBox/DialogueText
+var is_dialogue_active: bool = false
+var dialogue_pages: Array[String] = []
+var current_page: int = 0
+
 
 func _ready():
 	# Signal Connections
@@ -19,9 +26,13 @@ func _ready():
 	detector.body_exited.connect(_on_interaction_detector_body_exited)
 
 func _physics_process(delta):
-	#
+	if is_dialogue_active:
+		velocity = Vector2.ZERO
+		if Input.is_action_just_pressed("interact"):
+			advance_dialogue()
+		return
 	if near_enemy and Input.is_action_just_pressed("interact"):
-		show_dialog(near_enemy.dialog)
+		start_dialog(near_enemy.dialogue)
 		return
 		
 	#Get the direction of movement!!!
@@ -75,20 +86,54 @@ func _on_interaction_detector_body_entered(body):
 		near_enemy = body
 		print("Press E") 
 		
+		if near_enemy.has_method("show_indicator"):
+			near_enemy.show_indicator()
 
 func _on_interaction_detector_body_exited(body):
 	#See ya later aligator
 	if body == near_enemy:
+		if near_enemy.has_method("hide_indicator"):
+			near_enemy.hide_indicator()
+			
 		near_enemy = null
 		print("He is fleeing!!!")
-
-func show_dialog(text: String):
-	# Stop moving Bro fr
-	velocity = Vector2.ZERO
+	dialogue_box.visible = false
 	
-	if abs(last_direction.x) > abs(last_direction.y):
-		sprite.play("idle_right" if last_direction.x > 0 else "idle_left")
+func start_dialog(lines: Array[String]):
+	if lines.size() == 0: return
+	
+	is_dialogue_active = true
+	dialogue_pages = lines
+	current_page = 0
+	
+	update_animations(Vector2.ZERO)
+	
+	# Mostrar la caja de texto en pantalla
+	dialogue_box.show()
+	dialogue_text.text = dialogue_pages[current_page]
+
+func advance_dialogue():
+	current_page += 1
+	
+	# Si todavía quedan frases en la lista, mostramos la siguiente
+	if current_page < dialogue_pages.size():
+		dialogue_text.text = dialogue_pages[current_page]
 	else:
-		sprite.play("idle_down" if last_direction.y > 0 else "idle_up")
+		# Si ya no hay más frases, cerramos la caja y liberamos al jugador
+		finish_dialogue()
+
+func finish_dialogue():
+	is_dialogue_active = false
+	dialogue_box.hide()
+	dialogue_pages = []
+	current_page = 0
+	
+	if near_enemy and "is_bad" in near_enemy and near_enemy.is_bad:
+		var next_scene = near_enemy.next_scene
 		
-	print("Dialog: ", text)
+		if next_scene != "":
+			print("We are entering the fight >:)))")
+			get_tree().change_scene_to_file(next_scene)
+		else:
+			print("Error: The enemy has no map assigned")
+			

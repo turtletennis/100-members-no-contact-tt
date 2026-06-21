@@ -1,9 +1,36 @@
 extends CharacterBody2D
 
 @onready var animator: AnimatedSprite2D = $AnimatedSprite2D
+@onready var indicator: Label = $Indicator
 
 #Soon!
-@export_multiline var dialog: String = "YOU!!! Come here!!!!"
+@export_multiline var dialogue: Array[String] = [
+	"YOU!!! Come here!!!!", 
+	"WOAH, You are using comic SANS?!", 
+	"NICE", 
+	"LET'S FIGHT!!!"
+	]
+	
+@export var is_bad: bool = true
+@export_file("*.tscn") var next_scene : String = "res://Actual Game Folder/scenes/gameplay.tscn"
+
+@export var enemy_name: String = "Bird Defaultson"
+@export var enemy_level: int = 1
 
 func _ready():
 	animator.play("idle_down")
+	
+func show_indicator():
+	if indicator:
+		indicator.show()
+
+func hide_indicator():
+	if indicator:
+		indicator.hide()
+		
+func get_combat_data() -> Dictionary:
+	return {
+		"name" : enemy_name,
+		"level" : enemy_level,
+		"enemy_position": global_position
+	}
